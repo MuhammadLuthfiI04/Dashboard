@@ -1,0 +1,91 @@
+﻿<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card bg-dark text-white">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" asp-action="Import">
+                        <div class="form-group row align-items-center">
+                            <div class="col-md-6">
+                                <input type="file" name="file" id="file" accept=".xlsx" required>
+                            </div>
+                            <div class="col-md-6 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary mr-2">Import Data</button>&nbsp;&nbsp;
+                                <a asp-action="Export" class="btn btn-danger ml-2">Export</a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive my-3">
+                        <table id="example" class="table table-dark">
+                            <thead class="thead-light">
+                                <tr class="text-left">
+                                    <th scope="col">No</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Information</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    i++;
+                                    <tr>
+                                        <th scope="row">@i</th>
+                                        <td>@item.product</td>
+                                        <td>
+                                            <div class="status-circle status-@item.status @(item.status == 2 ? "active" : "")"></div>
+                                        </td>
+                                        <td>@item.information</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let updateInterval;
+
+    function changeStatus() {
+        var statusCells = document.querySelectorAll('.status-circle.status-2');
+        statusCells.forEach(function (cell) {
+            cell.classList.toggle('active');
+        });
+    }
+
+    function updateTableData() {
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetUpdatedProductData", "Product")',
+            dataType: 'json',
+            success: function (data) {
+                $('#example tbody').empty();
+                data.forEach(function (item, index) {
+                    var row = '<tr>';
+                    row += '<th scope="row">' + (index + 1) + '</th>';
+                    row += '<td>' + item.product + '</td>';
+                    row += '<td><div class="status-circle status-' + item.status + (item.status === 2 ? ' active' : '') + '"></div></td>';
+                    row += '<td>' + item.information + '</td>';
+                    row += '</tr>';
+                    $('#example tbody').append(row);
+                });
+                updateInterval;
+                updateInterval = setInterval(changeStatus, 3000);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    updateTableData();
+    setInterval(updateTableData, 2999);
+
+</script>
+

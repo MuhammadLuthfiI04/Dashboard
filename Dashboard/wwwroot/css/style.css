@@ -1,0 +1,38 @@
+﻿.status-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.status-0 {
+    background-color: white;
+}
+
+.status-1 {
+    background-color: green;
+}
+
+.status-2 {
+    background-color: white;
+}
+
+.status-2.active {
+    background-color: green;
+}
+
+.dataTables_length label,
+.dataTables_length label select,
+.dataTables_filter label,
+.dataTables_filter input {
+    color: slategray;
+}
+
+.dataTables_filter input {
+    background-color: white;
+}
+
+#example_length{
+    color: white;
+}

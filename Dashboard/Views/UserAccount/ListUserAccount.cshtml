@@ -1,0 +1,44 @@
+﻿<div class="row mt-3">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <a asp-action="CreateUserAccount" class="btn btn-primary">Create New</a>
+                <div class="table-responsive my-3">
+                    <table id="example" class="table table-striped">
+                        <thead class="thead-light">
+                            <tr class="text-left">
+                                <th scope="col">No</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int i = 0;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                i++;
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@item.id</td>
+                                    <td>@item.email</td>
+                                    <td>@item.password</td>
+                                    <td>@item.username</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditUserAccount", new { id = item.id }, new { @class = "btn btn-info text-light" })
+                                        @Html.ActionLink("Details", "DetailUserAccount", new { id = item.id }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink("Delete", "DeleteUserAccount", new { id = item.id }, new { @class = "btn btn-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

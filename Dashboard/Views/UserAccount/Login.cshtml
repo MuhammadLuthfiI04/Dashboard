@@ -1,0 +1,20 @@
+﻿@model UserAccount
+
+<h2>Login</h2>
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="text" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="Password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+    <div class="text-danger">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <p>Invalid email or password. Please try again.</p>
+        }
+    </div>
+</form>
